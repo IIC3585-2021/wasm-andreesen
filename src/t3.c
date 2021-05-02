@@ -8,7 +8,7 @@ int32_t **matrix = NULL;
 int32_t travelingSalesmanProblem(int32_t **graph, int32_t size, int32_t start, int32_t *cities_order)
 {
     // Orden Final
-    for (int32_t i = 0; i < 4; i++)
+    for (int32_t i = 0; i < size; i++)
     {
         cities_order[i] = 0;
     }
@@ -16,7 +16,7 @@ int32_t travelingSalesmanProblem(int32_t **graph, int32_t size, int32_t start, i
 
     //Ciudades Visitadas
     int32_t visited[size];
-    for (int32_t i = 0; i < 4; i++)
+    for (int32_t i = 0; i < size; i++)
     {
         visited[i] = 0;
     }
