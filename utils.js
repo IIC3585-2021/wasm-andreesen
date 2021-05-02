@@ -1,6 +1,9 @@
 const distancesDict = {};
 const citiesList = [];
 
+var nodes = []
+var edges = []
+
 const submit = () => {
   const arista1 = input_A.value + input_B.value;
   const arista2 = input_B.value + input_A.value;
@@ -14,17 +17,30 @@ const submit = () => {
     distancesDict[arista1] = input_distance.value;
     if (!citiesList.includes(input_A.value)) {
       citiesList.push(input_A.value);
+      nodes.push({id: nodes.length, label: input_A.value })
     }
     if (!citiesList.includes(input_B.value)) {
       citiesList.push(input_B.value);
+      nodes.push({id: nodes.length, label: input_B.value })
+
     }
-    var entry = document.createElement("li");
-    entry.appendChild(
-      document.createTextNode(
-        `${input_A.value}, ${input_B.value}, ${input_distance.value}`
-      )
-    );
-    matrix.appendChild(entry);
+
+    const from = nodes.filter(node => node.label === input_A.value )
+    const to = nodes.filter(node => node.label === input_B.value )
+
+    edges.push({from: from[0].id, to: to[0].id, label: input_distance.value})
+
+    var nodes_g = new vis.DataSet(nodes)
+    var edges_g = new vis.DataSet(edges)
+
+    var container = document.getElementById("mynetwork");
+    var data = {
+      nodes: nodes_g,
+      edges: edges_g,
+    };
+    var options = {};
+    var network = new vis.Network(container, data, options);
+
     input_A.value = "";
     input_B.value = "";
     input_distance.value = "";
@@ -54,7 +70,6 @@ const calculate = () => {
     }
     inputMatrix.push(city);
   }
-  console.log(inputMatrix);
   let graphPtr = makePtrOfMatrix(inputMatrix);
   let citiesOrder = makePtrOfArray(citiesList);
   let min_distance = 10000000000000;
@@ -73,6 +88,35 @@ const calculate = () => {
   for (let i = 0; i < path.length; i++) {
       final_path.push(citiesList[path[i]])
   }
+  final_path.push(final_path[0])
+
+  final_path.forEach((f_node, i) => {
+    if (i < final_path.length -1) {
+      const from = nodes.filter(node => node.label == f_node)
+      console.log(from)
+      const to = nodes.filter(node => node.label == final_path[i + 1])
+      console.log(to)
+      edgeIndex = edges.findIndex((edge => (edge.from == from[0].id && edge.to == to[0].id) || (edge.from == to[0].id && edge.to == from[0].id)))
+      console.log(edgeIndex)
+      edges[edgeIndex] = {from: from[0].id, to: to[0].id, color: 'red', width: 2, arrows: 'to'}
+
+    }
+    
+  });
+  console.log(edges)
+
+  var nodes_g = new vis.DataSet(nodes)
+  var edges_g = new vis.DataSet(edges)
+
+  var container = document.getElementById("mynetwork");
+  var data = {
+    nodes: nodes_g,
+    edges: edges_g,
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+
+
   routep.innerHTML = `La mejor ruta encontrada fue: ${final_path.join(", ")}`;
   timep.innerHTML = `El tiempo de ejecucion fue: ${endDate - startDate}`;
 };

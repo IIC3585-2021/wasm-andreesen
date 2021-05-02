@@ -5,16 +5,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+      <style type="text/css">
+        #mynetwork {
+          width: 600px;
+          height: 400px;
+          border: 1px solid lightgray;
+        }
+      </style>
     <title>Tarea Web Assembly</title>
 </head>
 
 <body>
 
 
-    <h1 id='saludo__h1'>Hola tarea</h1>
+    <h1 id='saludo__h1'>Tarea Web Assembly</h1>
 
-    <input text id='inputA' placeholder='City 1' />
-    <input text id='inputB' placeholder="City 2" />
+    <input text id='inputA' placeholder='City 1' autocapitalize />
+    <input text id='inputB' placeholder="City 2" autocapitalize />
     <input number id='input_distance' placeholder="Distance between cities" />
     <p id='cost'></p>
     <p id='route'></p>
@@ -22,9 +32,8 @@
     <button type="button" onclick="submit()" id='button'>Submit</button>
     <button type="button" onclick="calculate()" id='calculate'>Calculate</button>
     <ul id="matrix"></ul>
-    <div id="my_dataviz"></div>
+    <div id="mynetwork"></div>
     <script async type="text/javascript" src="t3v2.js"></script>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
 
     <script src="utils.js"></script>
 
