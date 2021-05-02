@@ -28,8 +28,6 @@ const submit = () => {
     input_A.value = "";
     input_B.value = "";
     input_distance.value = "";
-    console.log(distancesDict);
-    console.log(citiesList);
   }
 };
 
@@ -60,19 +58,23 @@ const calculate = () => {
   let graphPtr = makePtrOfMatrix(inputMatrix);
   let citiesOrder = makePtrOfArray(citiesList);
   let min_distance = 10000000000000;
+  let startDate = window.performance.now();
   for (let i = 0; i < citiesList.length; i++) {
-    let result = Module._travelingSalesmanProblem(
-      graphPtr,
-      inputMatrix.length,
-      i,
-      citiesOrder
-    );
-    console.log("Starting from" + i + ": " + result);
-    console.log(getArrayFromPtr(citiesOrder, citiesList.length));
-    if (result < min_distance) {
+    let result = Module._travelingSalesmanProblem(graphPtr, inputMatrix.length, i, citiesOrder);
+    let partial_path = getArrayFromPtr(citiesOrder, citiesList.length);
+    if (result < min_distance && partial_path.filter((x) => x === 0).length == 1) {
       min_distance = result;
+      var path = partial_path;
     }
   }
+  let endDate = window.performance.now();
+  costp.innerHTML = `El Costo Minimo encontrado es: ${min_distance}`;
+  let final_path = []
+  for (let i = 0; i < path.length; i++) {
+      final_path.push(citiesList[path[i]])
+  }
+  routep.innerHTML = `La mejor ruta encontrada fue: ${final_path.join(", ")}`;
+  timep.innerHTML = `El tiempo de ejecucion fue: ${endDate - startDate}`;
 };
 
 const makePtrOfMatrix = (graph) => {
@@ -110,5 +112,6 @@ button = document.getElementById("button");
 title = document.getElementById("saludo__h1");
 matrix = document.getElementById("matrix");
 calculateButton = document.getElementById("calculate");
-
-// button.addEventListener("click", function () { main() });
+costp = document.getElementById("cost");
+routep = document.getElementById("route");
+timep = document.getElementById("time");
