@@ -79,7 +79,7 @@ const calculate = () => {
   Module._permutation(arrPtr, graphPtr, citiesOrder, costPrt, 0, citiesList.length - 1);
   let endDate = window.performance.now();
   let cost = Module.getValue(costPrt, "i32")
-  if (cost == 10000000000000) {
+  if (cost == 1316134912) {
     costp.innerHTML = `No Existe Solucion`;
     timep.innerHTML = `El tiempo de ejecucion fue: ${endDate - startDate}`;
     return;
