@@ -72,18 +72,20 @@ const calculate = () => {
   }
   let graphPtr = makePtrOfMatrix(inputMatrix);
   let citiesOrder = makePtrOfArray(citiesList);
-  let min_distance = 10000000000000;
+  let arrPtr = makePtrOfArray(citiesList);
+  let costPrt = Module._calloc(1, "i32");
+  Module.setValue(costPrt, 10000000000000, "i32");
   let startDate = window.performance.now();
-  for (let i = 0; i < citiesList.length; i++) {
-    let result = Module._travelingSalesmanProblem(graphPtr, inputMatrix.length, i, citiesOrder);
-    let partial_path = getArrayFromPtr(citiesOrder, citiesList.length);
-    if (result < min_distance && partial_path.filter((x) => x === 0).length == 1) {
-      min_distance = result;
-      var path = partial_path;
-    }
-  }
+  Module._permutation(arrPtr, graphPtr, citiesOrder, costPrt, 0, citiesList.length - 1);
   let endDate = window.performance.now();
-  costp.innerHTML = `El Costo Minimo encontrado es: ${min_distance}`;
+  let cost = Module.getValue(costPrt, "i32")
+  if (cost == 10000000000000) {
+    costp.innerHTML = `No Existe Solucion`;
+    timep.innerHTML = `El tiempo de ejecucion fue: ${endDate - startDate}`;
+    return;
+  }
+  let path = getArrayFromPtr(citiesOrder, citiesList.length);
+  costp.innerHTML = `El Costo Minimo encontrado es: ${cost}`;
   let final_path = []
   for (let i = 0; i < path.length; i++) {
       final_path.push(citiesList[path[i]])
