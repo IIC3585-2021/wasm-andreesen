@@ -95,17 +95,13 @@ const calculate = () => {
   final_path.forEach((f_node, i) => {
     if (i < final_path.length -1) {
       const from = nodes.filter(node => node.label == f_node)
-      console.log(from)
       const to = nodes.filter(node => node.label == final_path[i + 1])
-      console.log(to)
       edgeIndex = edges.findIndex((edge => (edge.from == from[0].id && edge.to == to[0].id) || (edge.from == to[0].id && edge.to == from[0].id)))
-      console.log(edgeIndex)
       edges[edgeIndex] = {from: from[0].id, to: to[0].id, color: 'red', width: 2, arrows: 'to'}
 
     }
     
   });
-  console.log(edges)
 
   var nodes_g = new vis.DataSet(nodes)
   var edges_g = new vis.DataSet(edges)

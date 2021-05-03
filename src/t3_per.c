@@ -44,7 +44,7 @@ void permutation(int32_t *arr, int32_t **graph, int32_t *result, int32_t *global
 {
     if (start == end)
     {
-        printarray(arr, end + 1);
+        // printarray(arr, end + 1);
         int32_t cost = tsp_cost(graph, arr, end);
         if (cost < *global_cost && cost > 0)
         {
@@ -103,9 +103,9 @@ int32_t main()
     //calling permutation function
     permutation(arr, matrix, result, global_cost, 0, size - 1);
 
-    printf("Final cost %d\n", *global_cost);
-    printf("Solucion: \n");
-    printarray(result, size);
+    // printf("Final cost %d\n", *global_cost);
+    // printf("Solucion: \n");
+    // printarray(result, size);
 
     free(result);
     free(global_cost);
