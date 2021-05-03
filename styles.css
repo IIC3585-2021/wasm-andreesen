@@ -1,0 +1,19 @@
+* {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+}
+
+html {
+  background-color: snow;
+}
+
+#mynetwork {
+  width: 600px;
+  height: 400px;
+  margin-left: 650px;
+  border: 2px solid #69359c;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
